@@ -15,6 +15,14 @@ declare global {
 export const Chat = () => {
 
   const [start,setStart] = useState<boolean>(false);
+  const [inputData,setInputData] = useState<string>("");
+
+  const submitHandler = () => {
+    console.log(inputData);
+    // do api call 
+
+    setInputData("")
+  }
 
    const audioHandler = () => {
       setStart(prev => !prev);
@@ -33,6 +41,7 @@ export const Chat = () => {
 			recognition.addEventListener('result', (event:any) => {
 				const result = event.results[event.results.length - 1][0].transcript;
 				resultElement.textContent = result;
+        console.log(result);
 			});
 
    }
@@ -97,14 +106,16 @@ export const Chat = () => {
 
     <div className="bg-muted px-4 py-3 flex items-center gap-2">
         <Input
-          placeholder="Type your message..."
-          className="flex-1 rounded-lg border-none focus:ring-0 focus:ring-offset-0 resize-none"
+          placeholder="Type or Speak your query..."
+          className="flex-1 rounded-lg border-none focus:ring-0 focus:ring-offset-0 resize-none f"
           id="input"
+          value={inputData}
+          onChange={(e)=>setInputData(e.target.value)}
         />
          <Button variant="ghost" size="icon" className="rounded-full" onClick={audioHandler} id={start?"start":"stop"}>
          <AudioLines />
          </Button>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <Button variant="ghost" size="icon" className="rounded-full" onClick={submitHandler}>
           <SendIcon className="w-5 h-5" />
           <span className="sr-only">Send</span>
         </Button>
