@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import 'regenerator-runtime/runtime';
 import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import { Chat } from './pages/Chat.tsx';
+
 
 const router = createBrowserRouter([
    {

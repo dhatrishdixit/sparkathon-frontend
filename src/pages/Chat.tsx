@@ -4,6 +4,7 @@ import { Card } from '@/components/Card'
 import { Button } from '@/components/ui/button'
 import { AudioLines, SendIcon } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 declare global {
   interface Window {
@@ -16,33 +17,27 @@ export const Chat = () => {
 
   const [start,setStart] = useState<boolean>(false);
   const [inputData,setInputData] = useState<string>("");
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+  
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   const submitHandler = () => {
     console.log(inputData);
     // do api call 
-
+    window.scrollTo(0, document.body.scrollHeight);
+    //make this smoother by referencing end message or something
     setInputData("")
   }
 
    const audioHandler = () => {
       setStart(prev => !prev);
-    var startButton = document.getElementById('start');
-			var stopButton = document.getElementById('stop');
-			var resultElement = document.getElementById('input');
-
-			var recognition = new window.webkitSpeechRecognition();
-
-			recognition.lang = window.navigator.language;
-			recognition.interimResults = true;
-
-			startButton?.addEventListener('click', () => { recognition.start(); });
-			stopButton?.addEventListener('click', () => { recognition.stop(); });
-
-			recognition.addEventListener('result', (event:any) => {
-				const result = event.results[event.results.length - 1][0].transcript;
-				resultElement.textContent = result;
-        console.log(result);
-			});
 
    }
 
@@ -104,7 +99,7 @@ export const Chat = () => {
        />
     </div>
 
-    <div className="bg-muted px-4 py-3 flex items-center gap-2">
+    <div className="bg-muted px-4 py-3 flex items-center gap-2 sticky bottom-0">
         <Input
           placeholder="Type or Speak your query..."
           className="flex-1 rounded-lg border-none focus:ring-0 focus:ring-offset-0 resize-none f"
