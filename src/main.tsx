@@ -5,6 +5,7 @@ import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import { Chat } from './pages/Chat.tsx';
+import { ProductPage } from './pages/ProductPage.tsx';
 
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
    {
      path:"/chat",
      element:<Chat/>
+   },
+   {
+     path:"/product/:id" ,
+     element:<ProductPage/>
    }
 ]);
 ReactDOM.createRoot(document.getElementById('root')!).render(
