@@ -1,11 +1,13 @@
-const imageSrc = "https://images.unsplash.com/photo-1675516490928-e8fdfdf65ca8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-import React, { useState, useEffect } from 'react';
+import { Oval } from 'react-loader-spinner';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bubble } from '@/components/Bubble';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/ui/button';
 import { AudioLines, Ear, SendIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+
+const imageSrc = "https://images.unsplash.com/photo-1675516490928-e8fdfdf65ca8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 interface MessageSchema {
   isAI: boolean;
@@ -49,6 +51,11 @@ export const Chat = () => {
   const [messages, setMessages] = useState<MessageSchema[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSubmit = async () => {
     if (text.trim()) {
@@ -65,9 +72,15 @@ export const Chat = () => {
       } finally {
         setIsLoading(false);
       }
+      
+      // Scroll to bottom after state updates
+      setTimeout(scrollToBottom, 100);
     }
-    window.scrollTo(0, document.body.scrollHeight);
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -134,7 +147,19 @@ export const Chat = () => {
             )}
           </div>
         ))}
-        {isLoading && <div className="text-center">Loading AI response...</div>}
+        {isLoading && <div className="w-full flex justify-center items-center">
+          <Oval
+            visible={true}
+            height="80"
+            width="80"
+            color="#212122"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            secondaryColor="rgb(243 244 246 / var(--tw-bg-opacity)"
+          />
+        </div>}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="bg-muted px-4 py-3 flex items-center gap-2 sticky bottom-0">
@@ -168,4 +193,3 @@ export const Chat = () => {
   );
 };
 
-export default Chat;
