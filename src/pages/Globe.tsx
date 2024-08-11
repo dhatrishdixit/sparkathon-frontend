@@ -397,7 +397,7 @@ export function Globe() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row items-center justify-center overflow-hidden h-screen md:h-auto dark:bg-black bg-white relative w-full overflow-y-scroll scrollbar-thin dark:scrollbar-track-[#09090b] scrollbar-thumb-gray-700">
+    <div className="flex flex-row items-center justify-center overflow-hidden h-screen md:h-auto dark:bg-black bg-white relative w-full">
       <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] px-4">
         <motion.div
           initial={{
@@ -417,7 +417,7 @@ export function Globe() {
             Welcome to WallMart Customer Service
           </h2>
           <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
-          <Button className="mt-2 hover:cursor-pointer" onClick={()=>{navigate("/chat")}}>
+          <Button className="mt-2 text-lg hover:cursor-pointer" onClick={()=>{navigate("/chat")}}>
         Chat With Us →
       </Button>
           </p>
