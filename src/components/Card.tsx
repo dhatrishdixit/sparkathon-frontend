@@ -15,11 +15,11 @@ export const Card: React.FC<CardProps> = ({ imageUrl, title, description }) => {
       <div className="p-3">
         <a onClick={(e)=>e.preventDefault()}>
           <h5 className="text-lg font-semibold mb-1 text-center text-white">
-            {title}
+            {title.substring(0,20) + "..."}
           </h5>
         </a>
         <p className="text-xs text-gray-300 mb-3">
-          {description}
+          {description.substring(0,50) + "..."}
         </p>
         <div className="text-center">
           <a

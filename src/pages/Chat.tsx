@@ -39,13 +39,13 @@ interface ApiResponse {
 
 const fetchAIResponse = async (botMessage: string): Promise<MessageSchema> => {
   let config = {
-    method: "post",
+    method: "POST",
     maxBodyLength: Infinity,
     url: "http://localhost:5001/generate_keywords_and_search",
     headers: {
       "Content-Type": "application/json",
     },
-    data: botMessage,
+    data: {"product_description" :botMessage},
   };
 
   const result = await axios.request(config);
