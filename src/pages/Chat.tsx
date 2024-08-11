@@ -6,6 +6,7 @@ import { Card } from '@/components/Card';
 import { Button } from '@/components/ui/button';
 import { AudioLines, Ear, SendIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import axios from 'axios';
 
 const imageSrc = "https://images.unsplash.com/photo-1675516490928-e8fdfdf65ca8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
@@ -24,25 +25,51 @@ interface CardSchema {
   price: number;
 }
 
-const fetchAIResponse = (botMessage: string): Promise<MessageSchema> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const aiMessage: MessageSchema = {
-        isAI: true,
-        text: `Got your request for "${botMessage}".`,
-        suggestions: "Here are some suggestions:",
-        cards: Array(Math.floor(Math.random() * 3) + 1).fill(null).map((_, index) => ({
-          id: index + 1,
-          imageUrl: imageSrc,
-          title: `AI Suggested Product ${index + 1}`,
-          description: "This is an AI-generated product suggestion based on your message.",
-          price: 29.99 + (index * 10)
-        }))
-      };
-      resolve(aiMessage);
-    }, 1500);
-  });
+interface ApiResponse {
+  Available: boolean;
+  Brand: string;
+  Category: string;
+  Description: string;
+  "Product Name": string;
+  "Product Url": string;
+  "Sale Price": number;
+  "Unit Id": string;
+  score: number;
+}
+
+
+const fetchAIResponse = async (botMessage: string): Promise<MessageSchema> => {
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "http://localhost:5001/generate_keywords_and_search",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: botMessage,
+  };
+
+  const result = await axios.request(config);
+  const responseData: ApiResponse[] = result.data;
+
+  const cards: CardSchema[] = responseData.map((item, index) => ({
+    id: index + 1, // Using index + 1 as a simple id
+    imageUrl: "https://via.placeholder.com/150", // Placeholder image as the API doesn't provide image URLs
+    title: item["Product Name"],
+    description: item.Description,
+    price: item["Sale Price"],
+  }));
+
+  const aiMessage: MessageSchema = {
+    isAI: true,
+    text: `Here are some products related to "${botMessage}":`,
+    suggestions: "Click on a card to view more details.",
+    cards: cards,
+  };
+
+  return aiMessage;
 };
+
 
 export const Chat = () => {
   const [text, setText] = useState('');
