@@ -418,7 +418,7 @@ export function Globe() {
             Welcome to WallMart Customer Service
           </h2>
           <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
-          <Button className="mt-2 text-lg hover:cursor-pointer text-large" onClick={()=>{navigate("/chat")}}>
+          <Button className="mt-2 text-lg hover:cursor-pointer text-large text-black" onClick={()=>{navigate("/chat")}}>
         Chat With Us →
       </Button>
           </p>
