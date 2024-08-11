@@ -122,13 +122,13 @@ export const Chat = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col min-h-screen">
+    <div className="bg-black flex flex-col min-h-screen">
       <div className="flex-grow overflow-auto p-4">
         {messages.map((message, index) => (
           <div key={index} className={`mb-4 ${message.isAI ? 'text-left' : 'text-left'}`}>
             <Bubble text={message.text} isAI={message.isAI} />
             {message.isAI && message.suggestions && (
-              <div className="mt-2 mb-1 text-left text-sm text-gray-600">
+              <div className="mt-2 mb-1 text-left text-sm text-gray-400">
                 {message.suggestions}
               </div>
             )}
@@ -152,20 +152,20 @@ export const Chat = () => {
             visible={true}
             height="80"
             width="80"
-            color="#212122"
+            color="#ffffff"
             ariaLabel="oval-loading"
             wrapperStyle={{}}
             wrapperClass=""
-            secondaryColor="rgb(243 244 246 / var(--tw-bg-opacity)"
+            secondaryColor="rgb(75 85 99 / var(--tw-bg-opacity)"
           />
         </div>}
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="bg-muted px-4 py-3 flex items-center gap-2 sticky bottom-0">
+      <div className="bg-gray-900 px-4 py-3 flex items-center gap-2 sticky bottom-0">
         <Input
           placeholder="Type your message..."
-          className="flex-1 rounded-lg border-none focus:ring-0 focus:ring-offset-0 resize-none"
+          className="flex-1 rounded-lg border-none focus:ring-0 focus:ring-offset-0 resize-none bg-gray-800 text-white"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
@@ -173,7 +173,7 @@ export const Chat = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full"
+          className="rounded-full text-white hover:bg-gray-700"
           onClick={isRecording ? stopListening : startListening}
         >
           {isRecording ? <Ear /> : <AudioLines />}
@@ -181,7 +181,7 @@ export const Chat = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full"
+          className="rounded-full text-white hover:bg-gray-700"
           onClick={handleSubmit}
           disabled={isLoading}
         >
@@ -192,4 +192,3 @@ export const Chat = () => {
     </div>
   );
 };
-
