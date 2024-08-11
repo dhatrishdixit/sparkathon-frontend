@@ -70,7 +70,7 @@ export const Chat = () => {
       } catch (error) {
         console.error('Error fetching AI response:', error);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false);  
       }
       
       // Scroll to bottom after state updates
@@ -122,8 +122,8 @@ export const Chat = () => {
   };
 
   return (
-    <div className="bg-black flex flex-col min-h-screen">
-      <div className="flex-grow overflow-auto p-4">
+    <div className="bg-black flex flex-col h-screen ">
+      <div className="flex-grow overflow-y-scroll scrollbar-thin dark:scrollbar-track-[#09090b] scrollbar-thumb-gray-700 p-4">
         {messages.map((message, index) => (
           <div key={index} className={`mb-4 ${message.isAI ? 'text-left' : 'text-left'}`}>
             <Bubble text={message.text} isAI={message.isAI} />

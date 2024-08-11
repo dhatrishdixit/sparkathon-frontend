@@ -397,7 +397,7 @@ export function Globe() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row items-center justify-center overflow-hidden h-screen md:h-auto dark:bg-black bg-white relative w-full">
+    <div className="flex flex-row items-center justify-center overflow-hidden h-screen md:h-auto dark:bg-black bg-white relative w-full overflow-y-scroll scrollbar-thin dark:scrollbar-track-[#09090b] scrollbar-thumb-gray-700">
       <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] px-4">
         <motion.div
           initial={{
